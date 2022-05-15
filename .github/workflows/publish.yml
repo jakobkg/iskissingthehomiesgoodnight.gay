@@ -18,12 +18,12 @@ jobs:
       - name: Transpile project
         run: npm run compile
 
-      - name: Remove source files from deployment
-        run: rm -rf src/ package* tsconfig.json .eslint* .prettierrc.js
+      - name: Move production files to separate folder to deploy from
+        run: mkdir public && cp index.html public/index.html && cp -r dist/ public/ && cp CNAME public/ && cp LICENSE public/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          publish_dir: .
+          publish_dir: public
           force_orphan: true

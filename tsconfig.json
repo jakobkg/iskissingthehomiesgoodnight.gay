@@ -2,7 +2,7 @@
   "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "build",
+    "outDir": "dist",
     "strict": true,
     "target": "ES2021",
     "lib": ["DOM","ES2021"]
