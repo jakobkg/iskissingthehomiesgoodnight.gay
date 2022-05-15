@@ -15,6 +15,9 @@ jobs:
       - name: Get dependencies and transpile project
         run: npm ci
 
+      - name: Remove source files from deployment
+        run: rm -rf src/ package* tsconfig.json .eslint* .prettierrc.js
+
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
