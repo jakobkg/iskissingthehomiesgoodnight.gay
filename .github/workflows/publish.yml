@@ -12,8 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Get dependencies and transpile project
-        run: npm ci
+      - name: Get dependencies
+        run: npm i
+
+      - name: Transpile project
+        run: npm run compile
 
       - name: Remove source files from deployment
         run: rm -rf src/ package* tsconfig.json .eslint* .prettierrc.js
