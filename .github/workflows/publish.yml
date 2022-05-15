@@ -13,13 +13,10 @@ jobs:
       - name: Check out
         uses: actions/checkout@v2
 
-      - name: Get dependencies
+      - name: Get dependencies and transpile
         run: npm ci
 
-      - name: Transpile
-        run: npm run compile
-
-      - name: Publish current workdir (which contains generated content) to GitHub Pages
+      - name: Publish
         uses: rayluo/github-pages-overwriter@v1.2
 
         with:
