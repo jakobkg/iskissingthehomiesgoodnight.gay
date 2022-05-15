@@ -26,3 +26,4 @@ jobs:
         with:
           deploy_key: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           publish_dir: .
+          force_orphan: true
