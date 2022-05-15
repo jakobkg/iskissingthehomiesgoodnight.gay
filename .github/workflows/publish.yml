@@ -1,27 +1,22 @@
-name: Publish
+name: Publish to GitHub Pages
 
 on:
   push:
     branches:
-      - 'main'
-      - 'action'
+      - main
 
 jobs:
-  publish:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: Get dependencies
+      - name: Get dependencies and transpile project
         run: npm ci
-        
-      - name: Transpile
-        run: npm run compile
-        
-      - name: Publish current workdir (which contains generated content) to GitHub Pages
-        uses: rayluo/github-pages-overwriter@v1.2
 
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          source-directory: .
-          target-branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
