@@ -1,0 +1,9 @@
+{
+    "$schema": "../../contributors.schema.json",
+    "personalia": {
+        "displayname":  "Jakob Grønhaug",
+        "github":       "jakobkg",
+        "twitter":      "jakobkg",
+        "mastodon":     ""
+    }
+}
