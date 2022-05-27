@@ -4,13 +4,11 @@
     "rootDir": "src",
     "outDir": "dist",
     "strict": true,
-    "target": "ES2021",
-    "lib": ["DOM","ES2021"]
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["DOM","ESNext"]
   },
   "include": [
-    "**/*.ts",
-    "**/*.json",
-    "**/*.js",
-    "**/*.css",
+    "src/**/*.ts",
   ]
 }

@@ -1,36 +1,51 @@
 {
     "$id": "https://iskissingthehomiesgoodnight.gay/contributors.schema.json",
-    "title": "Contributor",
-    "description": "A contributor to the iskissingthehomiesgoodnight.gay style library",
+    "title": "Contributor list",
+    "description": "A list of contributors to the iskissingthehomiesgoodnight.gay style library",
     "type": "object",
     "properties": {
-        "personalia": {
-            "description": "Basic personalia for display purposes",
-            "type": "object",
-            "properties": {
-                "displayname": {
-                    "description": "(Optional) The name or nickname of the contributor, to be displayed on the page itself",
-                    "type": "string"
+        "contributors": {
+            "items": {
+                "type": "object",
+                "properties": {
+                    "personalia": {
+                        "description": "Basic personalia for display purposes",
+                        "type": "object",
+                        "properties": {
+                            "displayname": {
+                                "description": "(Optional) The name or nickname of the contributor, to be displayed on the page itself",
+                                "type": "string"
+                            },
+                            "github": {
+                                "description": "The Github username of the contributor. This will be displayed on the page if \"displayname\" is not set",
+                                "type": "string"
+                            },
+                            "twitter": {
+                                "description": "(Optional) The Twitter username of the contributor",
+                                "type": "string"
+                            },
+                            "mastodon": {
+                                "description": "(Optional) The Mastodon username of the contributor",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "github"
+                        ]
+                    },
+                    "styles": {
+                        "description": "List of styles added by this contributor",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
                 },
-                "github": {
-                    "description": "The Github username of the contributor. This will be displayed on the page if \"displayname\" is not set",
-                    "type": "string"
-                },
-                "twitter": {
-                    "description": "(Optional) The Twitter username of the contributor",
-                    "type": "string"
-                },
-                "mastodon": {
-                    "description": "(Optional) The Mastodon username of the contributor",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "github"
-            ]
+                "required": [
+                    "personalia",
+                    "styles"
+                ]
+            }
         }
-    },
-    "required": [
-        "personalia"
-    ]
+    }
 }
