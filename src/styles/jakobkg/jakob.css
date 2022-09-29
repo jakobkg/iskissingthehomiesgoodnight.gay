@@ -1,7 +1,10 @@
-body {
-    background-color: lightblue;
+.no {
+    color: blueviolet;
+    font-size: xx-large;
+    font-family: cursive;
+    font-weight: bolder;
 }
 
-text {
-    color: blueviolet;
+body {
+    background-color: lightblue;
 }
