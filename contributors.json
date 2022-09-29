@@ -1,0 +1,24 @@
+{
+    "$schema": "contributors.schema.json",
+    "contributors": [
+        {
+            "personalia": {
+                "github": "jakobkg"
+            },
+            "styles": [
+                "default"
+            ]
+        },
+        {
+            "personalia": {
+                "displayname": "Jakob",
+                "github": "jakobkg",
+                "twitter": "jakobkg"
+            },
+            "styles": [
+                "jakob"
+            ]
+        }
+    ]
+
+}
