@@ -5,6 +5,7 @@ use std::fs;
 use serde::Deserialize;
 use rand;
 use lazy_static::lazy_static;
+use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 
 #[derive(Debug, Deserialize)]
 struct Personalia {
@@ -36,7 +37,7 @@ lazy_static! {
     }.contributors;
 }
 
-static CNAME: &str = if cfg!(debug_assertions) {"http://localhost:8080"} else {"https://iskissingthehomiesgoodnight.gay"};
+static CNAME: &str = if cfg!(debug_assertions) {"https://localhost:8080"} else {"https://iskissingthehomiesgoodnight.gay"};
 
 
 fn make_div<S: Into<String> + std::fmt::Display>(service: S, name: S) -> String {
@@ -88,13 +89,24 @@ async fn front() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+    builder
+        .set_private_key_file("key.pem", SslFiletype::PEM)
+        .unwrap();
+    builder.set_certificate_chain_file("cert.pem").unwrap();
+
     println!("Server starting...");
     HttpServer::new(|| {
         App::new()
             .service(front)
             .service(Files::new("/assets", "./assets"))
     })
-    .bind(("localhost", 8080))?
+    .bind_openssl(
+        if cfg!(debug_assertions) {
+            "localhost:8080"
+        } else {
+            "iskissingthehomiesgoodnight.gay"
+        }, builder)?
     .run()
     .await
 }
