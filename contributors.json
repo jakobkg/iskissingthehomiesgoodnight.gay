@@ -3,12 +3,19 @@
     "contributors": [
         {
             "personalia": {
+                "github": "jakobkg"
+            },
+            "styles": [
+                "default"
+            ]
+        },
+        {
+            "personalia": {
                 "displayname": "Jakob",
                 "github": "jakobkg",
                 "twitter": "jakobkg"
             },
             "styles": [
-                "default",
                 "jakob"
             ]
         }
