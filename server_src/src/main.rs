@@ -105,7 +105,7 @@ async fn main() -> std::io::Result<()> {
         if cfg!(debug_assertions) {
             "localhost:8080"
         } else {
-            "iskissingthehomiesgoodnight.gay"
+            "iskissingthehomiesgoodnight.gay:443"
         }, builder)?
     .run()
     .await
