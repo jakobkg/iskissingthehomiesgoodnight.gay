@@ -3,7 +3,7 @@ default: debug
 keys:
 	if [[ ! -f "key.pem" ]]; then \
 		openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem \
-		-days 365 -sha256 -subj "/C=None/ST=None/L=None/O=None/OU=None/CN=localhost"; \
+		-days 365 -sha256 -subj "/C=NO/ST=None/L=None/O=None/OU=None/CN=localhost"; \
 		openssl rsa -in key.pem -out key.pem; \
 	fi
 
@@ -15,25 +15,25 @@ npm:
 	npm run build
 
 dir:
-	mkdir build
+	mkdir -p build
 
 move_dbg: dir
-	mv server_src/target/debug/server build/server
+	cp -u server_src/target/debug/server build/server
 
 move_release: dir
-	mv server_src/target/release/server build/server
+	cp -u server_src/target/release/server build/server
 
 dist: npm
-	mv dist/ build/dist
+	cp -ru dist/ build/dist
 
 copy_assets: dir
-	cp -r assets/ build/assets
-	cp index.html build/
-	cp contributors.json build/
+	cp -ru assets/ build/assets
+	cp -u index.html build/
+	cp -u contributors.json build/
 
 copy_keys: dir keys
-	cp key.pem build/
-	cp cert.pem build/
+	cp -u key.pem build/
+	cp -u cert.pem build/
 
 release: _release move_release
 
@@ -43,9 +43,9 @@ dev: _dev move_dbg
 
 _release: clean dir dist copy_assets copy_keys
 	cd server_src && \
-	cargo build --release
+	RUSTFLAGS='--cfg prod' cargo build --release
 
-_dev: clean dir dist copy_assets copy_keys
+_dev: dir dist copy_assets
 	cd server_src && \
 	cargo build
 
