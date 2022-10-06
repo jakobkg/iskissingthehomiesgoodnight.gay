@@ -1,6 +1,6 @@
 .no {
     color: blueviolet;
-    font-size: xx-large;
+    font-size: min(80vw, 80vh);
     font-family: cursive;
     font-weight: bolder;
 }
