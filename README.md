@@ -30,6 +30,8 @@ If you're feeling fancy, you may also add a script file such as `src/scripts/<yo
 2. The word "No" should be clearly readable on the page when your style and/or script is applied.
 3. Feel free to add additional build tools or technologies such as SASS or SCSS to the `npm build` action, as long as build times remain reasonable!
 
+For a sample pull request, [see #6](https://github.com/jakobkg/iskissingthehomiesgoodnight.gay/pull/6)
+
 ## Building
 
 Currently, building this project requires
