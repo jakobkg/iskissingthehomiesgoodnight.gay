@@ -18,23 +18,47 @@
             min-height: 95vh;
         }
 
-        .icons {
+        #icon-container {
             font-family: 'Courier New', Courier, monospace;
-            font: size 12px;
-            position:fixed;
-            display: block;
+            font-size: 12px;
+            position: absolute;
+            display: flex;
             bottom: 0;
             left: 0;
+            transform: translateX(calc(-100% + 15px));
+            background-color: #75757536;
+            border-top-right-radius: 10px;
         }
 
-        a {
+        #icon-container:hover {
+            transition: 500ms;
+            transform: translateX(0);
+        }
+
+        #icons {
+            padding: 5px;
+        }
+
+        #icons>* {
+            width: max-content;
+        }
+
+        #icons a {
             text-decoration: none;
             color: black;
         }
 
-        img {
+        #icons img {
             width: 16px;
         }
+
+        #hovericon {
+            width: 10px;
+            padding-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+
         /* style insert */
     </style>
 </head>
@@ -44,12 +68,18 @@
         <div class="no">
             No
         </div>
+    </div>
 
-        <div class="icons">
+    <div id="icon-container">
+        <div id="icons">
             <!-- name insert -->
             <!-- github insert -->
             <!-- twitter insert -->
         </div>
+        <div id="hovericon">
+            <p>></p>
+        </div>
+    </div>
     </div>
 </body>
 
