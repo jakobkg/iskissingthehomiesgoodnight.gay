@@ -132,7 +132,7 @@ async fn front() -> impl Responder {
 /// Get request handler that responds with a specific style rather than randomly choosing one
 /// Meant to make developing a specific style easier as you're no longer at the whim of the RNG
 #[cfg(not(feature = "production"))]
-async fn get_style(params: web::Path<(String, String)>) -> impl Responder {
+async fn specific_style(params: web::Path<(String, String)>) -> impl Responder {
     let script_re = Regex::new("/\\* script insert \\*/").unwrap();
     let style_re = Regex::new("/\\* style insert \\*/").unwrap();
 
@@ -188,7 +188,7 @@ async fn main() -> std::io::Result<()> {
             .service(Files::new("/assets", "./assets"))
             .route(
                 "/{name}/{contribution}",
-                web::get().to(get_style)
+                web::get().to(specific_style)
             )
     })
     .bind(("localhost", 8080))?
