@@ -43,7 +43,7 @@ dev: _dev move_dbg
 
 _release: clean dir dist copy_assets copy_keys
 	cd server_src && \
-	RUSTFLAGS='--cfg prod' cargo build --release
+	cargo build --release --features "production"
 
 _dev: dir dist copy_assets
 	cd server_src && \
