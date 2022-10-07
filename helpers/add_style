@@ -1,0 +1,74 @@
+#!/usr/bin/python
+
+from pathlib import Path
+import os
+import json
+
+p = Path(os.path.dirname(os.path.abspath(__file__)))
+
+if str(p).endswith("helpers"):
+    p = p.parent
+
+with open(str(p) + "/src/contributors.json") as f:
+    c = json.load(f)
+    pass
+
+print("Welcome to the style creator!")
+github = input("Please enter your Github username: ")
+displayname = input("Enter your name/handle (or leave blank): ")
+twitter = input("Enter your Twitter handle (or leave blank): ")
+
+stylename = input("Please enter the name of the new style: ")
+print()
+
+if not github or not stylename:
+    print("Github username and style name are required")
+    exit()
+
+already_exists = False
+for contributor in c["contributors"]:
+    if contributor["personalia"]["github"] == github:
+        newcontributor = contributor
+        c["contributors"].remove(contributor)
+        already_exists = True
+        break
+
+if not already_exists:
+    newcontributor = {
+        "personalia": {
+            "github": github
+        },
+        "styles": []
+    }
+
+    if twitter:
+        newcontributor["personalia"]["twitter"] = twitter
+    
+    if displayname:
+        newcontributor["personalia"]["displayname"] = displayname
+    
+newcontributor["styles"].append(stylename)
+
+c["contributors"].append(newcontributor)
+
+if not os.path.exists(str(p) + f"/src/styles/{github}"):
+    os.makedirs(str(p) + f"/src/styles/{github}")
+
+if not os.path.exists(str(p) + f"/src/scripts/{github}"):
+    os.makedirs(str(p) + f"/src/scripts/{github}")
+
+with open(str(p) + f"/src/styles/{github}/{stylename}.css", "x") as f:
+    pass
+
+with open(str(p) + f"/src/scripts/{github}/{stylename}.js", "x") as f:
+    pass
+
+with open(str(p) + "/src/contributors.json", "w") as f:
+    f.write(json.dumps(c, indent=2))
+    pass
+
+print("Files created! You can now start editing " \
+    + f"/src/styles/{github}/{stylename}.css and " \
+    + f"/src/scripts/{github}/{stylename}.js")
+
+print(f"Once you have started the dev server, you can check your style at http://localhost:8080/{github}/{stylename}")

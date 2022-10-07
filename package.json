@@ -7,13 +7,9 @@
     "typescript": "^4.6.4"
   },
   "scripts": {
-    "build": "npm run copy-assets && tsc",
-    "copy-assets": "copyfiles -u 1 src/**/*.css dist/",
+    "build": "tsc",
     "clean": "gts clean",
     "fix": "gts fix",
     "lint": "gts lint"
-  },
-  "dependencies": {
-    "express": "^4.18.1"
   }
 }

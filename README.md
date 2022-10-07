@@ -21,8 +21,9 @@ To get started, you probably want to be able to run the development server to be
 Currently, building this project requires
 
 - Git, to be able to clone this repository
+- Entr, for the automatically recompiling dev server
 - Curl, to be able to install some other dependencies
-- Node 16 and npm, 
+- Node 16
 - A Rust compiler and Cargo build system
 - A linker (cc)
 - GNU Make
@@ -31,35 +32,33 @@ Currently, building this project requires
 The following steps should allow you to install them
 
 1. Install the most readily available dependencies from your package manager of choice \
-  Ubuntu (and other Debian derivatives): `sudo apt install git curl gcc make` \
-  Fedora: `sudo dnf install git curl gcc make`
+  Ubuntu (and other Debian derivatives): `sudo apt install git curl gcc make entr` \
+  Fedora: `sudo dnf install git curl gcc make entr`
 
 2. Install the Rust build system \
   See https://rustup.rs/ for the recommended install method
 
 3. Install Node 16 \
-  I highly recommend doing this by installing nvm (see: https://github.com/nvm-sh/nvm), \
-  then installing Node 16 with `nvm install 16 && nvm use 16`
+  I recommend doing this by installing nvm (see: https://github.com/nvm-sh/nvm), \
+  then installing Node 16 with `nvm install 16 && nvm use 16`. \
+  Node can also be installed from some package managers, but shipped versions may vary
 
-### Building
+### Building the server
 
-First, clone this repository using `git clone https://github.com/jakobkg/iskissingthehomiesgoodnight.gay`, and move into the cloned repository with `cd iskissingthehomiesgoodnight.gay`. Now, simply run the build script by running `make`, and the project will build! The first time building might take a while, as you're going to be fetching and building a lot of dependencies from NPM and Cargo. After the first build process, these will be reused and you should be able to complete the process in a few seconds!
+First, clone this repository using `git clone https://github.com/jakobkg/iskissingthehomiesgoodnight.gay`, and move into the cloned repository with `cd iskissingthehomiesgoodnight.gay`. Now, simply run the build script by running `make`, and the project will build! The first time building might take a while, as you're going to be fetching and building a lot of dependencies from NPM and Cargo. After the first build process, these will be reused and the process should complete in a matter of seconds
 
 Finally, you can now run the server by running `(cd build; ./server)`! You should see the server starting in your terminal, and can see the site by opening https://localhost:8080 in a web browser!
 
-### Getting started
+### Getting started on a contribution
 
-TODO: implement specific style viewing in dev server and refer to it here
-
-The most basic contribution to this project consists of two parts:
-- A .css file with styling for the website, placed in `src/styles/<your username>/<name of the style>.css`.
-  - This CSS will be automatically applied to the HTML by the server.
-- An entry in `contributors.json`, containing your GitHub username and the name of the stylesheet you added. 
-  - This file is used by the server to find stylesheets and scripts to inject into the HTML before serving it to a client.
+- Run the script `helpers/add_style` to create your style files in the right place. Note the link this gives you at the end!
+- Build the project by running `make` if you have not already done so, and launch it
+- Open a second terminal in the repo, and run `make watch`
+- Now edit your style and script file, every time you save your edits, the `make watch` action will push your changes to the server, simply refresh the page to see your changes
 
 That's it!
 
-If you're feeling fancy, you may also add a script file such as `src/scripts/<your username>/<name of the style>.js` to add things such as animations to your contribution.
+Once you're happy with your contribution, create a pull request to have it added to the actual webpage!
 
 ### Guidelines
 

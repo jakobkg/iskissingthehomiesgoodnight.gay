@@ -1,4 +1,7 @@
 default: debug
+
+clean:
+	rm -rf build
 	
 keys:
 	if [[ ! -f "key.pem" ]]; then \
@@ -7,33 +10,51 @@ keys:
 		openssl rsa -in key.pem -out key.pem; \
 	fi
 
-clean:
-	rm -rf build
+watch:
+	@while sleep 1; do find . | entr -cdp make rebuild; done
 
-npm:
-	npm i
-	npm run build
+rebuild:
+	@echo echo Change detected, rebuilding...
+	@make cp-dist --no-print-directory
+
+npm-fetch:
+	@echo Fetching npm dependencies...
+	@npm i -silent
+	@echo Done!
+
+npm-build:
+	@echo Running npm build action...
+	@npm run build
+	@echo Done!
 
 dir:
-	mkdir -p build
+	@-mkdir -p build
+	@-mkdir -p build/dist
 
 move_dbg: dir
-	cp -u server_src/target/debug/server build/server
+	@cp -u server_src/target/debug/server build/server
 
 move_release: dir
-	cp -u server_src/target/release/server build/server
+	@cp -u server_src/target/release/server build/server
 
-dist: npm
-	cp -ru dist/ build/dist
+dist: dir npm-fetch npm-build
+	@-cp -ru dist/* build/dist
+	@-cp -ru src/* build/dist
+
+cp-dist: npm-build
+	@echo Copying built files
+	@-cp -ru dist/* build/dist
+	@-cp -ru src/* build/dist
+	@echo Done :\)
 
 copy_assets: dir
-	cp -ru assets/ build/assets
-	cp -u index.html build/
-	cp -u contributors.json build/
+	@cp -ru assets/ build/assets
+	@cp -u src/index.html build/
+	@cp -u src/contributors.json build/
 
 copy_keys: dir keys
-	cp -u key.pem build/
-	cp -u cert.pem build/
+	@cp -u key.pem build/
+	@cp -u cert.pem build/
 
 release: _release move_release
 
