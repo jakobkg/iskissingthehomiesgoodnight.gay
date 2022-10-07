@@ -181,7 +181,7 @@ async fn main() -> std::io::Result<()> {
 #[cfg(not(feature = "production"))]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("Server starting...");
+    println!("Server starting, try visiting http://localhost:8080 to see the results");
     HttpServer::new(|| {
         App::new()
             .service(front)
