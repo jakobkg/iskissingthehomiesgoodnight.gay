@@ -1,5 +1,5 @@
 use actix_files::Files;
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, App, HttpResponse, HttpServer, Responder, web};
 use lazy_static::lazy_static;
 use rand;
 use regex::Regex;
@@ -129,6 +129,30 @@ async fn front() -> impl Responder {
     HttpResponse::Ok().body(template)
 }
 
+/// Get request handler that responds with a specific style rather than randomly choosing one
+/// Meant to make developing a specific style easier as you're no longer at the whim of the RNG
+#[cfg(not(feature = "production"))]
+async fn get_style(params: web::Path<(String, String)>) -> impl Responder {
+    let script_re = Regex::new("/\\* script insert \\*/").unwrap();
+    let style_re = Regex::new("/\\* style insert \\*/").unwrap();
+
+    // Clone the template
+    let mut template = TEMPLATE.clone();
+
+    // Load the provided stylesheet into the template, if any
+    let style = fs::read_to_string(format!("dist/styles/{}/{}.css", params.0, params.1)).unwrap_or_default();
+
+    // Load the provided script into the template, if any
+    let script =
+        fs::read_to_string(format!("dist/scripts/{}/{}.js", params.0, params.1)).unwrap_or_default();
+    
+    template = style_re
+        .replace(&script_re.replace(&template, script), style)
+        .into();
+
+    HttpResponse::Ok().body(template)
+}
+
 // Main method used if the server is built in production mode, with SSL
 #[cfg(feature = "production")]
 #[actix_web::main]
@@ -162,6 +186,10 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .service(front)
             .service(Files::new("/assets", "./assets"))
+            .route(
+                "/{name}/{contribution}",
+                web::get().to(get_style)
+            )
     })
     .bind(("localhost", 8080))?
     .run()
