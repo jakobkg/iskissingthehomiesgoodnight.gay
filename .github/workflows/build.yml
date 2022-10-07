@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [ "main" ]
+    paths:
+      - "src/styles/**/*"
+      - "src/scripts/**/*"
 
 jobs:
   build:
@@ -13,15 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-        default: true
-        override: true
-    
     - uses: actions/setup-node@v3
       with:
         node-version: 16
       
-    - name: Install dependencies
+    - name: Build project
       run: make
