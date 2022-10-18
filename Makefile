@@ -11,10 +11,12 @@ keys:
 	fi
 
 watch:
-	@while sleep 1; do find . | entr -cdp make rebuild; done
+	@echo Watching /src for file changes
+	@while sleep 1; do find ./src | entr -cdp make rebuild; done
+	@echo Stopped watching
 
 rebuild:
-	@echo echo Change detected, rebuilding...
+	@echo Change detected, rebuilding...
 	@make cp-dist --no-print-directory
 
 npm-fetch:
